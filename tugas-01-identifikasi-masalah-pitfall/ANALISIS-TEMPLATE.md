@@ -5,7 +5,7 @@
 | Nama | NIM | Kontribusi |
 |---|---|---|
 | Ahmad Diqri Wirayudha | 103072400084 | The Network Is Reliable|
-| [nama 2] | [nim] | [pitfall/bagian yang dikerjakan] |
+| Vaylan Christopher | 103072400154 |  | Latency is Zero|
 | [nama 3] | [nim] | [pitfall/bagian yang dikerjakan] |
 
 ## Pitfall 1: The Network Is Reliable — ditulis oleh Ahmad Diqri Wirayudha
@@ -38,9 +38,21 @@ Saat jaringan putus dan sistem mencoba kirim ulang (retry), pastikan ada nomor u
 2. Risiko Serangan Balik (Self-Inflicted DDoS): Jika ratusan pelanggan checkout bersamaan dan jaringannya sedang goyang, fitur retry akan menyerang server pembayaran secara berkali-kali lipat (retry storm). koneksi yang sedang bermasalah justru bisa mati total karena kebanjiran request kirim ulang (retry) dari FoodGo sendiri.
 ---
 
-## Pitfall 2: [nama pitfall] — ditulis oleh [nama]
+## Pitfall 2: Latency is Zero — ditulis oleh Vaylan Christopher
 
-(ulangi struktur di atas)
+**Bukti di skenario:** tidak ada timeout sama sekali pada pemanggilan antar service (modul pesanan memanggil modul pembayaran dan menunggu tanpa batas waktu).
+
+**Kenapa ini keliru:** 
+banyak orang yang mengira suatu jaringan dengan latensi nol orang bisa mengirim data tanpa loading sama sekali.
+
+**Dampak ke FoodGo:**
+terjadi kehabisan ketersediaan port TCP pada sistem pembayaran. hal ini disebabkan oleh tumpukan koneksi yang sangat lambat yang tidak pernah ditutup secara otomatis maupun dikembalikan ke dalam connection pool untuk dapat digunakan kembali oleh proses lain.
+
+**Solusi desain awal:** 
+menerapkan perbaikan arsitektur dengan cara menghilangkan ketergantungan komunikasi yang bersifat mengunci dan sinkron (blocking synchronous) pada proses pemanggilan antar service.
+
+**Trade-off:**
+Alur pemrosesan transaksi tidak lagi berjalan secara terurut atau linier dalam satu waktu. Dampaknya, pengguna tidak bisa lagi langsung menerima status konfirmasi keberhasilan transaksi secara instan pada detik yang sama saat pemesanan dilakukan.
 
 ---
 
