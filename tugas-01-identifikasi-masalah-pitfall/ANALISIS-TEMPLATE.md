@@ -6,7 +6,7 @@
 |---|---|---|
 | Ahmad Diqri Wirayudha | 103072400084 | The Network Is Reliable |
 | Vaylan Christopher | 103072400154 | Latency is Zero |
-| [nama 3] | [nim] | [pitfall/bagian yang dikerjakan] |
+| Shaqeel Kenzie Ramadhansyah Dirganthara | 103072400061 | Single Point Of Failure |
 
 ## Pitfall 1: The Network Is Reliable — ditulis oleh Ahmad Diqri Wirayudha
 
@@ -56,11 +56,17 @@ Alur pemrosesan transaksi tidak lagi berjalan secara terurut atau linier dalam s
 
 ---
 
-## Pitfall 3: [nama pitfall] — ditulis oleh [nama]
+## Pitfall 3: Single Point Of Failure — ditulis oleh Shaqeel Kenzie Ramadhansyah Dirganthara
 
-(ulangi struktur di atas)
+**Bukti di skenario:** Pada studi kasus dijelaskan bahwa seluruh modul utama, yaitu pesanan, pembayaran, dan notifikasi kurir, dijalankan pada satu server dan berada dalam satu proses monolitik yang sama. Selain itu, disebutkan juga bahwa server backend terkadang mengalami crash dan harus dinyalakan kembali secara manual.
 
----
+**Kenapa ini keliru:** karena jika menempatkan seluruh layanan penting dalam satu server itu dapat membuat sistem terlalu bergantung pada satu titik. setiap server pasti memiliki keterbatasan sumber daya seperti CPU, memori, dan kapasitas jaringan. kalau beban kerja meningkat drastis atau terjadi gangguan pada server tersebut, maka seluruh layanan yang bergantung pada server itu akan ikut terdampak. Oleh karena itu, asumsi bahwa satu server dapat menangani semua kebutuhan sistem secara terus-menerus bukan pendekatan yang ideal untuk aplikasi dengan jumlah pengguna yang besar.
+
+**Dampak ke FoodGo:** Ketika terjadi lonjakan pesanan, misalnya saat jam makan siang atau ketika ada promo besar, penggunaan sumber daya server meningkat secara signifikan. Karena semua modul berbagi sumber daya yang sama, modul pembayaran dan notifikasi kurir juga ikut terdampak meskipun sumber masalahnya berasal dari tingginya beban pada modul pesanan. Kondisi ini dapat menyebabkan aplikasi menjadi lambat, banyak permintaan mengalami timeout, hingga server mengalami crash. Akibatnya, seluruh layanan FoodGo tidak dapat beroperasi secara normal pada waktu yang bersamaan.
+
+**Solusi desain awal:** Salah satu solusi yang dapat diterapkan adalah dengan memisahkan setiap modul menjadi service yang berdiri sendiri. Dengan cara ini, modul pesanan, pembayaran, dan notifikasi kurir dapat berjalan pada server yang berbeda. solusi tersebut memungkinkan setiap service untuk ditingkatkan kapasitasnya sesuai kebutuhan sesuai kebutuhan dan mengurangi resiko seluruh sistem berhenti/crash ketika salah satu service mengalami gangguan.
+
+**Trade-off:** Meskipun solusi ini dapat meningkatkan keandalan sistem, penerapannya juga menambah kompleksitas arsitektur. yang pasti Tim pengembang harus mengelola lebih banyak service, mengatur komunikasi antar service, serta menyiapkan mekanisme monitoring dan load balancing. Selain itu, biaya operasional juga berpotensi meningkat karena diperlukan lebih banyak sumber daya infrastruktur dibandingkan menggunakan satu server monolitik.
 
 ## Kesimpulan Kelompok
 
