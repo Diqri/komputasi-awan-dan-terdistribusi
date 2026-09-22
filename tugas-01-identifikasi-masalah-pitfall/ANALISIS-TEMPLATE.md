@@ -4,8 +4,8 @@
 
 | Nama | NIM | Kontribusi |
 |---|---|---|
-| Ahmad Diqri Wirayudha | 103072400084 | The Network Is Reliable|
-| Vaylan Christopher | 103072400154 |  | Latency is Zero |
+| Ahmad Diqri Wirayudha | 103072400084 | The Network Is Reliable |
+| Vaylan Christopher | 103072400154 | Latency is Zero |
 | [nama 3] | [nim] | [pitfall/bagian yang dikerjakan] |
 
 ## Pitfall 1: The Network Is Reliable — ditulis oleh Ahmad Diqri Wirayudha
