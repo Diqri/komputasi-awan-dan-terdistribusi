@@ -4,7 +4,7 @@
 - Opsi arsitektur yang dipertimbangkan: SOA & Pub-Sub
 - Alasan memilih kombinasi SOA & Pub-Sub: Kombinasi ini memecah sistem monolitik yang tightly coupled menjadi layanan independen (decoupled). Jika modul kurir mengalami gangguan jaringan atau lonjakan antrean, maka modul pembayaran dan pemesanan pelanggan di FoodGo tetap dapat berjalan normal tanpa ikut lumpuh/macet.
 1. Fungsi SOA: Pemisahan Modul secara jelas, di tugas 1 sistem FoodGo bersifat monolitik sehingga jika modul pembayaran error atau kurir overload, seluruh aplikasi ikut down. Dengan SOA, setiap modul (Pesanan, Pembayaran, Resto, Kurir) dipecah menjadi layanan terpisah yang memiliki tanggung jawab mandiri (service-oriented).
-2. Fungsi Pub-Sub: Sangat efektif untuk proses notifikasi dan distribusi tugas ke banyak pihak sekaligus tanpa membuat sistem utama menunggu (blocking).
+2. Fungsi Pub-Sub: Sangat efektif untuk proses notifikasi dan distribusi tugas ke banyak pihak sekaligus tanpa membuat sistem utama menunggu (blocking). d hdbdjdj 
 Contoh: Begitu pembayaran sukses, modul Pembayaran cukup menerbitkan sebuah peristiwa (event) bernama ORDER_PAID ke message broker (Pub-Sub). Secara bersamaan dan otomatis, modul Kurir (untuk mencari driver terdekat) dan modul Katalog Resto (untuk mencetak tiket pesanan di dapur) akan merespons event tersebut secara asinkron, tanpa mengganggu proses utama pelanggan.
 
 - Interaksi antar komponen:
