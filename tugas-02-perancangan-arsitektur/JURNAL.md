@@ -40,7 +40,7 @@ Adanya Pengelolaan Tambahan membuat Kita harus mengelola pelayan pesan (message 
 - Revisi Jawaban:
   - Mengubah asumsi latensi nol pada pemanggilan antar-service dengan menerapkan prinsip ketahanan sistem terdistribusi, yaitu pemutusan koneksi otomatis saat terjadi.
 
-## [Kenzie 30 september 2006]
+## [Kenzie 30 september 2026]
 Kesimpulan
 
 Pada Tugas 2, FoodGo dirancang menggunakan kombinasi SOA (Service-Oriented Architecture) dan Pub-Sub untuk mengatasi masalah sistem monolitik pada Tugas 1. Dengan SOA, modul Pesanan, Pembayaran, Restoran, dan Kurir dipisahkan menjadi layanan yang memiliki tanggung jawab masing-masing. Pemisahan ini membuat setiap layanan tidak terlalu bergantung satu sama lain, sehingga gangguan pada salah satu layanan tidak secara langsung menyebabkan seluruh sistem ikut berhenti.
