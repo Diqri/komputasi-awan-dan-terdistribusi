@@ -40,10 +40,18 @@ Adanya Pengelolaan Tambahan membuat Kita harus mengelola pelayan pesan (message 
 - Revisi Jawaban:
   - Mengubah asumsi latensi nol pada pemanggilan antar-service dengan menerapkan prinsip ketahanan sistem terdistribusi, yaitu pemutusan koneksi otomatis saat terjadi.
 
-## [Nama-Tanggal]
+## [Kenzie 30 september 2026]
+Kesimpulan
 
+Pada Tugas 2, FoodGo dirancang menggunakan kombinasi SOA (Service-Oriented Architecture) dan Pub-Sub untuk mengatasi masalah sistem monolitik pada Tugas 1. Dengan SOA, modul Pesanan, Pembayaran, Restoran, dan Kurir dipisahkan menjadi layanan yang memiliki tanggung jawab masing-masing. Pemisahan ini membuat setiap layanan tidak terlalu bergantung satu sama lain, sehingga gangguan pada salah satu layanan tidak secara langsung menyebabkan seluruh sistem ikut berhenti.
 
+Sementara itu, Pub-Sub digunakan untuk komunikasi secara asinkron, terutama dalam proses penyebaran informasi kepada beberapa layanan. Setelah proses pembayaran berhasil, informasi pesanan dapat diteruskan melalui Message Broker sehingga layanan Restoran dan Kurir dapat memproses tugasnya tanpa membuat proses utama harus terus menunggu. Dengan pendekatan ini, komunikasi antar layanan menjadi lebih fleksibel dan mengurangi ketergantungan langsung antar modul.
 
+Pada pengembangan desain selanjutnya, ditambahkan Timeout dan Circuit Breaker pada komunikasi antara Order Service dan Payment Service untuk menangani kondisi ketika layanan pembayaran mengalami keterlambatan atau gangguan. Selain itu, Dead Letter Queue (DLQ) digunakan untuk menampung pesan yang gagal diproses agar dapat dianalisis atau diproses kembali tanpa mengganggu antrean utama. Penambahan mekanisme tersebut ditujukan untuk mengurangi risiko terjadinya cascading failure pada sistem FoodGo.
+
+Namun, penggunaan SOA dan Pub-Sub juga memiliki beberapa konsekuensi. Alur sistem menjadi lebih kompleks sehingga proses debugging lebih sulit dibandingkan sistem monolitik. Selain itu, komunikasi asinkron dapat menyebabkan eventual consistency, yaitu data antar layanan tidak selalu diperbarui pada waktu yang sama. Sistem juga perlu menangani kemungkinan pesan diterima lebih dari satu kali dengan menerapkan idempotency pada layanan yang memproses pesan.
+
+Dengan demikian, rancangan SOA dan Pub-Sub memberikan pemisahan layanan yang lebih baik serta mekanisme untuk menghadapi gangguan dan peningkatan beban pada FoodGo. Namun, keuntungan tersebut disertai dengan kebutuhan pengelolaan dan kompleksitas sistem yang lebih tinggi dibandingkan arsitektur monolitik.
 
 
 ## Log Penggunaan AI (Level 2)
