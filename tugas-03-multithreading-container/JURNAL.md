@@ -8,9 +8,12 @@
 - Kenapa bisa meleset (jelaskan mekanisme race condition dengan kata sendiri):
 Penyebab utama angka hancur hingga tersisa 3 adalah karena adanya jeda `time.sleep(0.0001)` yang disisipkan tepat setelah variabel `processed_count` dibaca oleh thread. Saat 100 thread dijalankan serentak tanpa Lock, hampir semua thread mengambil snapshot nilai awal yang sama (yaitu 0). Ketika thread-thread tersebut tertahan sejenak di baris `time.sleep`, mereka secara bergantian bangun dan menuliskan hasil kalkulasinya (`0 + 1 = 1`) ke dalam memori. Akibatnya terjadi efek *domino overwrite*—ratusan proses penambahan nilai yang seharusnya diakumulasikan malah terus-menerus menimpa variabel global dengan angka yang sama. Data penambahan dari puluhan thread hangus begitu saja, sehingga hasil akhir yang berhasil selamat hanya menyentuh angka 3 dari target 100.
 
-
+- Hasil `processed_count` yang didapat: 36 (Kenzie)
+- Kenapa bisa meleset: Analoginya seperti 100 orang yang mencoba memperbarui satu catatan secara bersamaan tanpa aturan antrean. Ketika satu thread sedang membaca nilai counter, thread lain sudah keburu membaca nilai lama yang sama sebelum sempat diperbarui. Akibatnya, saat masing-masing thread menuliskan hasil penambahannya, data dari thread sebelumnya menjadi tertimpa (overwritten). Karena tidak ada mekanisme Lock yang mengatur giliran, banyak proses penambahan yang terbuang dan hasil akhirnya hanya tercatat 36 dari target 100 pesanan.
+- 
 ## Percobaan dengan Lock
-- Hasil `processed_count` setelah perbaikan: 100 
+- Hasil `processed_count` setelah perbaikan: 100
+- Penjelasan singkat: Setelah ditambahkan `with lock:`, setiap thread wajib mengantri saat membaca dan mengupdate variabel `processed_count`. Hal ini mencegah terjadinya race condition sehingga seluruh 100 pesanan berhasil dihitung dengan akurat.
 
 ## Kendala Docker
 - Error yang ditemui saat `docker build`/`docker run` dan cara memperbaikinya: ...
