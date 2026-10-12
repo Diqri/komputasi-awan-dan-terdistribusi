@@ -26,10 +26,10 @@ def process_order(order_id: int) -> None:
 
     # TODO 2: Menambahkan increment `processed_count`.
 
-   
-    current_value = processed_count     # 1. Membaca nilai saat ini
-    time.sleep(0.0001)                  # 2. Jeda mikro yang memicu bentrok antar thread
-    processed_count = current_value + 1 # 3. Menulis kembali nilai baru (rawan tertimpa)
+    with lock:
+        current_value = processed_count     # 1. Membaca nilai saat ini
+        time.sleep(0.0001)                  # 2. Jeda mikro yang memicu bentrok antar thread
+        processed_count = current_value + 1 # 3. Menulis kembali nilai baru (rawan tertimpa)
 
 def worker(order_ids: list) -> None:
     """Satu thread pekerja memproses sekumpulan order_id."""
