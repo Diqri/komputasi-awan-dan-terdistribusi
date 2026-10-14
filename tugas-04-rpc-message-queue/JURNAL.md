@@ -3,6 +3,8 @@
 ## Jalur yang dipilih
 - saya mengerjakan jalur A (RPC) untuk mensimulasikan komunikasi sinkron antara modul pesanan dan modul pembayaran. Operasi seperti pengecekan saldo dan pemotongan saldo memerlukan respons instan (blocking / request-response) agar transaksi dapat dipastikan valid seketika sebelum pesanan dilanjutkan. (Vaylan)
 - Diqri: Mengerjakan Jalur B, menguji grafik antrian untuk memastikan pesanan consumer tetap diproses dalam keadaan offline dan publisher menyala karena antrean tersimpan pada database.
+-Kenzie : Berhasil melakukan *cloning* proyek dan menguji komunikasi sinkron secara lokal dengan memanggil fungsi `cek_saldo` dan `proses_pembayaran`, di mana transaksi berhasil diproses secara real-time serta saldo pengguna ter update secara instan.
+Kesimpulannya : Jalur A (RPC) ini sangat tepat digunakan untuk proses-proses krusial yang membutuhkan kepastian respons instan dan konsisten, yang di mana client perlu menunggu langsung hasil eksekusi dari server.
 
 ## Kendala teknis
 - Pada saat running jalur A (RPC) tidak ada kendala sama sekali
