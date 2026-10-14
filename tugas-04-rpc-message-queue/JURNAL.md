@@ -11,6 +11,9 @@
 - Langkah uji: matikan consumer → jalankan publisher → nyalakan consumer
 - Hasil yang diamati: *Bagian ini dikerjakan dan didokumentasikan oleh anggota kelompok yang mengambil Jalur B.*
 
+- Analisis: 
+Pola Message Queue (MQ) lebih efektif dibanding RPC, karena mampu memisahkan suatu hubungan agar bisa berjalan secara mandiri/asinkron dan memberikan ketahanan (fault tolerance) yang tinggi, sehingga pesanan tetap aman di dalam antrean meskipun modul kurir sedang down dan lonjakan transaksi dapat diatasi melalui manajemen beban (load leveling). Sebaliknya, jika skenario tersebut dipaksakan menggunakan RPC yang bersifat synchronous, sistem akan mengalami tight coupling fatal di mana modul pembayaran ikut lambat atau mengalami timeout saat server kurir bermasalah, yang berujung pada buruknya pengalaman pengguna serta risiko kegagalan transaksi secara keseluruhan. Contoh case: penggunaan RPC (Remote Procedure Call) untuk memproses permintaan real-time inventory check atau pemotongan stok bahan baku secara langsung saat pembayaran pesanan dilakukan. Jika modul gudang atau database inventaris sedang mengalami lonjakan beban atau down, RPC akan memaksa proses pembayaran pelanggan tertahan (blocking), karena menunggu respons sinkron dari server gudang, yang berakibat pada kegagalan transaksi secara keseluruhan (cascade failure), padahal pelanggan hanya ingin menyelesaikan pembayaran pesanan mereka.
+
 ## Log Penggunaan AI (Level 2)
 
 > Wajib diisi sesuai kebijakan Level 2 di [`../RUBRIK-UMUM.md`](../RUBRIK-UMUM.md). Tulis "Tidak memakai AI" pada baris pertama jika memang tidak dipakai. Hanya untuk brainstorming ide/outline — bukan untuk kode/analisis/teks akhir.
